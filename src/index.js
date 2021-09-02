@@ -20,10 +20,7 @@ client.on("messageCreate", async (message) => {
   const command = args.shift().toLowerCase();
 
   if (command == "ip") {
-    message.reply(
-      "ip: **play.xeonmine.me**\n" +
-      "Version: **1.9 - 1.17.1**"
-    );
+    message.reply("ip: **play.xeonmine.me**\n" + "Version: **1.9 - 1.17.1**");
   }
 });
 // When the client is ready, run this code (only once)
@@ -49,12 +46,12 @@ client.once("ready", () => {
       activities: [estados[i]],
       status: "idle",
     });
-  }
+  };
 
   setInterval(() => {
-    precence()
-    i = i === 2 ? 0 : i+1;
-  },10000);
+    precence();
+    i = i === 2 ? 0 : i + 1;
+  }, 10000);
 
   console.log("Ready!");
 });
