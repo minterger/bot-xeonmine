@@ -38,10 +38,6 @@ client.once("ready", () => {
       type: "PLAYING",
     },
     {
-      name: "Prefix: z!",
-      type: "WATCHING",
-    },
-    {
       name: "Mostrar IP: z!ip",
       type: "WATCHING",
     },
@@ -57,7 +53,7 @@ client.once("ready", () => {
 
   setInterval(() => {
     precence()
-    i = i === 3 ? 0 : i+1;
+    i = i === 2 ? 0 : i+1;
   },10000);
 
   console.log("Ready!");
