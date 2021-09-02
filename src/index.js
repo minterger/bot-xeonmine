@@ -1,5 +1,6 @@
 // Require the necessary discord.js classes
 const { Client, Intents } = require("discord.js");
+const util = require("minecraft-server-util");
 require("dotenv").config();
 
 const token = process.env.TOKEN;
@@ -21,6 +22,22 @@ client.on("messageCreate", async (message) => {
 
   if (command == "ip") {
     message.reply("ip: **play.xeonmine.me**\n" + "Version: **1.9 - 1.17.1**");
+  }
+
+  if (command == "mcstatus") {
+    const result = await util.status("play.xeonmine.me", { port: 25565 });
+    if (result.errno) {
+      message.reply(
+        'Servidor: play.xeonmine.me\n' +
+        'El servidor se encuentra Offline'
+      );
+    } else {
+      message.reply(
+        'Servidor: play.xeonmine.me\n' +
+        'Players: ' + result.onlinePlayers + '/' + result.maxPlayers + '\n' +
+        'El servidor se encuentra Online'
+      )
+    }
   }
 });
 // When the client is ready, run this code (only once)
