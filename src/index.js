@@ -20,21 +20,30 @@ client.on("messageCreate", async (message) => {
   const command = args.shift().toLowerCase();
 
   if (command == "ip") {
-    message.reply(`ip: **play.xeonmine.me**
-Version: **1.9 - 1.17.1**
-    `);
+    message.reply(
+      "ip: **play.xeonmine.me**\n" +
+      "Version: **1.9 - 1.17.1**"
+    );
   }
 });
 // When the client is ready, run this code (only once)
 client.once("ready", () => {
   const estados = [
     {
-      name: "ip: play.xeonmine.ga",
+      name: "play.xeonmine.ga",
       type: "PLAYING",
     },
     {
-      name: "mc: 1.9 - 1.17.1",
+      name: "1.9 - 1.17.1",
       type: "PLAYING",
+    },
+    {
+      name: "Prefix: z!",
+      type: "WATCHING",
+    },
+    {
+      name: "Mostrar IP: z!ip",
+      type: "WATCHING",
     },
   ];
 
@@ -48,7 +57,7 @@ client.once("ready", () => {
 
   setInterval(() => {
     precence()
-    i = i === 0 ? 1 : 0;
+    i = i === 3 ? 0 : i+1;
   },10000);
 
   console.log("Ready!");
