@@ -49,17 +49,18 @@ client.on("messageCreate", async (message) => {
 
   if (command == "players") {
     const res = await server();
-    const players = res.samplePlayers.map((item) => {
-      return "Nick: " + item.name + "\n";
-    });
     if (res.errno) {
       message.reply(
         "Servidor: play.xeonmine.me\n" + "El servidor se encuentra Offline"
       );
     } else {
-      message.reply(
-        "Players Online:\n" + players
-      );
+      let players = res.samplePlayers.map((item) => {
+        return "Nick" + item.name;
+      });
+
+      players = players.toString().replace(/,/g, "\n");
+
+      message.reply("Players Online:\n" + players);
     }
   }
 });
