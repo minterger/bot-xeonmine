@@ -26,7 +26,7 @@ client.on("messageCreate", async (message) => {
 
   if (command == "help" || command == "commands") {
     const embed = new MessageEmbed()
-      .setTitle("Comandos")
+      .setTitle("COMANDOS")
       .setColor("790ED7")
       // .setDescription(
       //   "**z!help** o **z!commands** muestra este mensaje\n" +
@@ -37,21 +37,21 @@ client.on("messageCreate", async (message) => {
       .addFields(
         {
           name: "Help",
-          value: "**z!help** o **z!commands** muestra este mensaje",
+          value: "z!help **o** z!commands **- muestra este mensaje**",
         },
         {
           name: "Mostrar IP",
-          value: "**z!ip** ver la ip y version del servidor de minecraft",
+          value: "z!ip **- ver la ip y version del servidor de minecraft**",
         },
         {
           name: "Server Status",
           value:
-            "**z!status** ver cantidad de usuarios y el estado del servidor",
+            "z!status **- ver cantidad de usuarios y el estado del servidor**",
         },
         {
           name: "Players Online",
           value:
-            "**z!players** ver el nick de los jugadores conectados al servidor",
+            "z!players **- ver el nick de los jugadores conectados al servidor**",
         }
       )
       .setFooter("XeonMine Bot")
@@ -150,9 +150,9 @@ client.on("messageCreate", async (message) => {
       const embed = new MessageEmbed()
         .setTitle("Ping")
         .setDescription(
-          `🏓Mensaje **${
+          `🏓Mensaje: **${
             msg.createdTimestamp - message.createdTimestamp
-          }**ms. API **${Math.round(client.ws.ping)}**ms`
+          }**ms. API: **${Math.round(client.ws.ping)}**ms`
         );
       message.channel.send({ embeds: [embed] });
     });
