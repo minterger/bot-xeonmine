@@ -108,7 +108,7 @@ client.once("ready", () => {
       type: "PLAYING",
     },
     {
-      name: "Mostrar IP: z!ip",
+      name: "Help: z!help",
       type: "WATCHING",
     },
   ];
