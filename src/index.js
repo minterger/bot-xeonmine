@@ -24,6 +24,19 @@ client.on("messageCreate", async (message) => {
   const args = message.content.slice(prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
 
+  if (command == "help" || command == "commands") {
+    const embed = new MessageEmbed()
+      .setTitle("Comandos")
+      .setColor("RANDOM")
+      .setDescription(
+        "**z!help** o **z!commands** muestra este mensaje" +
+          "**z!ip** ver la ip y version del servidor de minecraft\n" +
+          "**z!mcstatus** ver cantidad de usuarios y el estado del servidor\n" +
+          "**z!players** ver el nick de los jugadores conectados al servidor"
+      );
+    message.channel.send({ embeds: [embed] });
+  }
+
   if (command == "ip") {
     const embed = new MessageEmbed()
       .setTitle("XeonMine Server")
