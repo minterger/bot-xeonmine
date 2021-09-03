@@ -144,6 +144,19 @@ client.on("messageCreate", async (message) => {
       message.channel.send({ embeds: [embed] });
     }
   }
+  if (command == "ping") {
+    message.channel.send("Loading data").then(async (msg) => {
+      msg.delete();
+      const embed = new MessageEmbed()
+        .setTitle("Ping")
+        .setDescription(
+          `🏓El ping es de ${
+            msg.createdTimestamp - message.createdTimestamp
+          }ms. El ping de la API es de ${Math.round(client.ws.ping)}ms`
+        );
+      message.channel.send({ embeds: [embed] });
+    });
+  }
 });
 // When the client is ready, run this code (only once)
 client.once("ready", () => {
