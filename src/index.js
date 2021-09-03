@@ -90,7 +90,7 @@ client.once("ready", () => {
   const precence = () => {
     client.user.setPresence({
       activities: [estados[i]],
-      status: "idle",
+      status: "online",
     });
   };
 
