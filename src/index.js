@@ -150,9 +150,9 @@ client.on("messageCreate", async (message) => {
       const embed = new MessageEmbed()
         .setTitle("Ping")
         .setDescription(
-          `🏓El ping es de ${
+          `🏓Mensaje **${
             msg.createdTimestamp - message.createdTimestamp
-          }ms. El ping de la API es de ${Math.round(client.ws.ping)}ms`
+          }**ms. API **${Math.round(client.ws.ping)}**ms`
         );
       message.channel.send({ embeds: [embed] });
     });
