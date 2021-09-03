@@ -42,7 +42,7 @@ client.on("messageCreate", async (message) => {
       .setTitle("XeonMine Server")
       .setColor("RANDOM")
       .setDescription(
-        "Ip: **play.xeonmine.me**\n" + "Version: **1.9 - 1.17.1**"
+        "Ip: **play.xeonmine.me**\n" + "Ip2: **xms.minecraft.casa**\n" + "Version: **1.9 - 1.17.1**"
       );
     message.channel.send({ embeds: [embed] });
   }
