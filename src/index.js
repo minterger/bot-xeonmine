@@ -62,9 +62,9 @@ client.on("messageCreate", async (message) => {
 
       message.reply(
         "Players Online:\n" +
-        "――――――――――\n" +
-        players +
-        "――――――――――\n"
+        "―――――――――\n" +
+        players + '\n' +
+        "―――――――――"
       );
     }
   }
