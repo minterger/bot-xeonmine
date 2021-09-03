@@ -1,5 +1,5 @@
 // Require the necessary discord.js classes
-const { Client, Intents } = require("discord.js");
+const { Client, Intents, MessageEmbed } = require("discord.js");
 const util = require("minecraft-server-util");
 require("dotenv").config();
 
@@ -31,19 +31,25 @@ client.on("messageCreate", async (message) => {
   if (command == "mcstatus") {
     const res = await server();
     if (res.errno) {
-      message.reply(
-        "Servidor: **play.xeonmine.me**\n" + "El servidor se encuentra Offline"
-      );
+      const embed = new MessageEmbed()
+        .setColor("PURPLE")
+        .setTitle("Servidor: **play.xeonmine.me**")
+        .setDescription("El servidor se encuentra Offline");
+      message.reply(embed);
     } else {
-      message.reply(
-        "Servidor: **play.xeonmine.me**\n" +
+      const embed = new MessageEmbed()
+        .setColor("PURPLE")
+        .setTitle("Servidor: **play.xeonmine.me**")
+        .setDescription(
           "Players: **" +
-          res.onlinePlayers +
-          "/" +
-          res.maxPlayers +
-          "**\n" +
-          "El servidor se encuentra Online"
-      );
+            res.onlinePlayers +
+            "/" +
+            res.maxPlayers +
+            "**\n" +
+            "El servidor se encuentra Online"
+        );
+
+      message.reply(embed);
     }
   }
 
@@ -61,10 +67,7 @@ client.on("messageCreate", async (message) => {
       players = players.toString().replace(/,/g, "\n");
 
       message.reply(
-        "Players Online:\n" +
-        "―――――――――\n" +
-        players + '\n' +
-        "―――――――――"
+        "Players Online:\n" + "―――――――――\n" + players + "\n" + "―――――――――"
       );
     }
   }
