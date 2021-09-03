@@ -29,7 +29,7 @@ client.on("messageCreate", async (message) => {
       .setTitle("Comandos")
       .setColor("RANDOM")
       .setDescription(
-        "**z!help** o **z!commands** muestra este mensaje" +
+        "**z!help** o **z!commands** muestra este mensaje\n" +
           "**z!ip** ver la ip y version del servidor de minecraft\n" +
           "**z!mcstatus** ver cantidad de usuarios y el estado del servidor\n" +
           "**z!players** ver el nick de los jugadores conectados al servidor"
