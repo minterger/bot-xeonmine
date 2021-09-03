@@ -60,7 +60,12 @@ client.on("messageCreate", async (message) => {
 
       players = players.toString().replace(/,/g, "\n");
 
-      message.reply("Players Online:\n" + players);
+      message.reply(
+        "Players Online:\n" +
+        "――――――――――\n" +
+        players +
+        "――――――――――\n"
+      );
     }
   }
 });
