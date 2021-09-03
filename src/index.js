@@ -27,37 +27,79 @@ client.on("messageCreate", async (message) => {
   if (command == "help" || command == "commands") {
     const embed = new MessageEmbed()
       .setTitle("Comandos")
-      .setColor("RANDOM")
-      .setDescription(
-        "**z!help** o **z!commands** muestra este mensaje\n" +
-          "**z!ip** ver la ip y version del servidor de minecraft\n" +
-          "**z!mcstatus** ver cantidad de usuarios y el estado del servidor\n" +
-          "**z!players** ver el nick de los jugadores conectados al servidor"
-      );
+      .setColor("790ED7")
+      // .setDescription(
+      //   "**z!help** o **z!commands** muestra este mensaje\n" +
+      //     "**z!ip** ver la ip y version del servidor de minecraft\n" +
+      //     "**z!status** ver cantidad de usuarios y el estado del servidor\n" +
+      //     "**z!players** ver el nick de los jugadores conectados al servidor"
+      // )
+      .addFields(
+        {
+          name: "Help",
+          value: "**z!help** o **z!commands** muestra este mensaje",
+        },
+        {
+          name: "Mostrar IP",
+          value: "**z!ip** ver la ip y version del servidor de minecraft",
+        },
+        {
+          name: "Server Status",
+          value:
+            "**z!status** ver cantidad de usuarios y el estado del servidor",
+        },
+        {
+          name: "Players Online",
+          value:
+            "**z!players** ver el nick de los jugadores conectados al servidor",
+        }
+      )
+      .setFooter("XeonMine Bot")
+      .setTimestamp();
     message.channel.send({ embeds: [embed] });
   }
 
   if (command == "ip") {
     const embed = new MessageEmbed()
       .setTitle("XeonMine Server")
-      .setColor("RANDOM")
-      .setDescription(
-        "Ip: **play.xeonmine.me**\n" + "Ip2: **xms.minecraft.casa**\n" + "Version: **1.9 - 1.17.1**"
-      );
+      .setColor("00CC19")
+      // .setDescription(
+      //   "Ip: **play.xeonmine.me**\n" + "Ip2: **xms.minecraft.casa**\n" + "Version: **1.9 - 1.17.1**"
+      // )
+      .setFields(
+        {
+          name: "IP Primaria:",
+          value: "`play.xeonmine.me`",
+        },
+        {
+          name: "IP Secundaria:",
+          value: "`xms.minecraft.casa`",
+        },
+        {
+          name: "Version:",
+          value: "1.9 - 1.17.1",
+        }
+      )
+      .setFooter("XeonMine Bot")
+      .setTimestamp();
+
     message.channel.send({ embeds: [embed] });
   }
 
-  if (command == "mcstatus") {
+  if (command == "status") {
     const res = await server();
     if (res.errno) {
       const embed = new MessageEmbed()
         .setTitle("Servidor: **play.xeonmine.me**")
         .setDescription("El servidor se encuentra Offline")
-        .setColor("RANDOM");
+        .setColor("RED")
+        .setFooter("XeonMine Bot")
+        .setTimestamp();
+
       message.channel.send({ embeds: [embed] });
     } else {
       const embed = new MessageEmbed()
-        .setColor("RANDOM")
+        .setColor("00CC19")
         .setTitle("Servidor: **play.xeonmine.me**")
         .setDescription(
           "Players: **" +
@@ -66,7 +108,9 @@ client.on("messageCreate", async (message) => {
             res.maxPlayers +
             "**\n" +
             "El servidor se encuentra Online"
-        );
+        )
+        .setFooter("XeonMine Bot")
+        .setTimestamp();
 
       message.channel.send({ embeds: [embed] });
     }
@@ -78,7 +122,10 @@ client.on("messageCreate", async (message) => {
       const embed = new MessageEmbed()
         .setTitle("Servidor: **play.xeonmine.me**")
         .setDescription("El servidor se encuentra Offline")
-        .setColor("RANDOM");
+        .setColor("RED")
+        .setFooter("XeonMine Bot")
+        .setTimestamp();
+
       message.channel.send({ embeds: [embed] });
     } else {
       let players = res.samplePlayers.map((item) => {
@@ -90,7 +137,9 @@ client.on("messageCreate", async (message) => {
       const embed = new MessageEmbed()
         .setTitle("Players Online")
         .setColor("RANDOM")
-        .setDescription(players);
+        .setDescription(players)
+        .setFooter("XeonMine Bot")
+        .setTimestamp();
 
       message.channel.send({ embeds: [embed] });
     }
