@@ -25,20 +25,26 @@ client.on("messageCreate", async (message) => {
   const command = args.shift().toLowerCase();
 
   if (command == "ip") {
-    message.reply("Ip: **play.xeonmine.me**\n" + "Version: **1.9 - 1.17.1**");
+    const embed = new MessageEmbed()
+      .setTitle("XeonMine Server")
+      .setColor("RANDOM")
+      .setDescription(
+        "Ip: **play.xeonmine.me**\n" + "Version: **1.9 - 1.17.1**"
+      );
+    message.channel.send({ embeds: [embed] });
   }
 
   if (command == "mcstatus") {
     const res = await server();
     if (res.errno) {
       const embed = new MessageEmbed()
-        .setColor("PURPLE")
         .setTitle("Servidor: **play.xeonmine.me**")
-        .setDescription("El servidor se encuentra Offline");
-      message.reply(embed);
+        .setDescription("El servidor se encuentra Offline")
+        .setColor("RANDOM");
+      message.channel.send({ embeds: [embed] });
     } else {
       const embed = new MessageEmbed()
-        .setColor("PURPLE")
+        .setColor("RANDOM")
         .setTitle("Servidor: **play.xeonmine.me**")
         .setDescription(
           "Players: **" +
@@ -49,16 +55,18 @@ client.on("messageCreate", async (message) => {
             "El servidor se encuentra Online"
         );
 
-      message.reply(embed);
+      message.channel.send({ embeds: [embed] });
     }
   }
 
   if (command == "players") {
     const res = await server();
     if (res.errno) {
-      message.reply(
-        "Servidor: **play.xeonmine.me**\n" + "El servidor se encuentra Offline"
-      );
+      const embed = new MessageEmbed()
+        .setTitle("Servidor: **play.xeonmine.me**")
+        .setDescription("El servidor se encuentra Offline")
+        .setColor("RANDOM");
+      message.channel.send({ embeds: [embed] });
     } else {
       let players = res.samplePlayers.map((item) => {
         return `Nick: **${item.name}**`;
@@ -66,9 +74,12 @@ client.on("messageCreate", async (message) => {
 
       players = players.toString().replace(/,/g, "\n");
 
-      message.reply(
-        "Players Online:\n" + "―――――――――\n" + players + "\n" + "―――――――――"
-      );
+      const embed = new MessageEmbed()
+        .setTitle("Players Online")
+        .setColor("RANDOM")
+        .setDescription(players);
+
+      message.channel.send({ embeds: [embed] });
     }
   }
 });
