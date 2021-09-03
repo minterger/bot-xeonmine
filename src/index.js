@@ -25,23 +25,23 @@ client.on("messageCreate", async (message) => {
   const command = args.shift().toLowerCase();
 
   if (command == "ip") {
-    message.reply("ip: **play.xeonmine.me**\n" + "Version: **1.9 - 1.17.1**");
+    message.reply("Ip: **play.xeonmine.me**\n" + "Version: **1.9 - 1.17.1**");
   }
 
   if (command == "mcstatus") {
     const res = await server();
     if (res.errno) {
       message.reply(
-        "Servidor: play.xeonmine.me\n" + "El servidor se encuentra Offline"
+        "Servidor: **play.xeonmine.me**\n" + "El servidor se encuentra Offline"
       );
     } else {
       message.reply(
-        "Servidor: play.xeonmine.me\n" +
-          "Players: " +
+        "Servidor: **play.xeonmine.me**\n" +
+          "Players: **" +
           res.onlinePlayers +
           "/" +
           res.maxPlayers +
-          "\n" +
+          "**\n" +
           "El servidor se encuentra Online"
       );
     }
@@ -51,11 +51,11 @@ client.on("messageCreate", async (message) => {
     const res = await server();
     if (res.errno) {
       message.reply(
-        "Servidor: play.xeonmine.me\n" + "El servidor se encuentra Offline"
+        "Servidor: **play.xeonmine.me**\n" + "El servidor se encuentra Offline"
       );
     } else {
       let players = res.samplePlayers.map((item) => {
-        return "Nick" + item.name;
+        return `Nick: **${item.name}**`;
       });
 
       players = players.toString().replace(/,/g, "\n");
