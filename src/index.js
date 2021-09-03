@@ -29,7 +29,7 @@ client.on("messageCreate", async (message) => {
   }
 
   if (command == "mcstatus") {
-    const res = server();
+    const res = await server();
     if (res.errno) {
       message.reply(
         "Servidor: play.xeonmine.me\n" + "El servidor se encuentra Offline"
@@ -48,7 +48,7 @@ client.on("messageCreate", async (message) => {
   }
 
   if (command == "players") {
-    const res = server();
+    const res = await server();
     const players = res.samplePlayers.map((item) => {
       return "Nick: " + item.name + "\n";
     });
