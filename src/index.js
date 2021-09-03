@@ -10,6 +10,10 @@ const intents = new Intents(32767);
 // Create a new client instance
 const client = new Client({ intents });
 
+const server = async () => {
+  return await util.status("play.xeonmine.me", { port: 25565 });
+};
+
 client.on("messageCreate", async (message) => {
   const prefix = "z!";
 
@@ -25,18 +29,37 @@ client.on("messageCreate", async (message) => {
   }
 
   if (command == "mcstatus") {
-    const result = await util.status("play.xeonmine.me", { port: 25565 });
-    if (result.errno) {
+    const res = server();
+    if (res.errno) {
       message.reply(
-        'Servidor: play.xeonmine.me\n' +
-        'El servidor se encuentra Offline'
+        "Servidor: play.xeonmine.me\n" + "El servidor se encuentra Offline"
       );
     } else {
       message.reply(
-        'Servidor: play.xeonmine.me\n' +
-        'Players: ' + result.onlinePlayers + '/' + result.maxPlayers + '\n' +
-        'El servidor se encuentra Online'
-      )
+        "Servidor: play.xeonmine.me\n" +
+          "Players: " +
+          res.onlinePlayers +
+          "/" +
+          res.maxPlayers +
+          "\n" +
+          "El servidor se encuentra Online"
+      );
+    }
+  }
+
+  if (command == "players") {
+    const res = server();
+    const players = res.samplePlayers.map((item) => {
+      return "Nick: " + item.name + "\n";
+    });
+    if (res.errno) {
+      message.reply(
+        "Servidor: play.xeonmine.me\n" + "El servidor se encuentra Offline"
+      );
+    } else {
+      message.reply(
+        "Players Online:\n" + players
+      );
     }
   }
 });
