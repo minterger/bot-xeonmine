@@ -11,7 +11,11 @@ const intents = new Intents(32767);
 const client = new Client({ intents });
 
 const server = async () => {
-  return await util.status("play.xeonmine.me", { port: 25565 });
+  try {
+    return await util.status("play.xeonmine.me", { port: 25565 });
+  } catch (error) {
+    return null
+  }
 };
 
 client.on("messageCreate", async (message) => {
@@ -88,7 +92,7 @@ client.on("messageCreate", async (message) => {
 
   if (command == "status") {
     const res = await server();
-    if (res.errno) {
+    if (res === null) {
       const embed = new MessageEmbed()
         .setTitle("Servidor: **play.xeonmine.me**")
         .setDescription("El servidor se encuentra Offline")
@@ -118,7 +122,7 @@ client.on("messageCreate", async (message) => {
 
   if (command == "players") {
     const res = await server();
-    if (res.errno) {
+    if (res === null) {
       const embed = new MessageEmbed()
         .setTitle("Servidor: **play.xeonmine.me**")
         .setDescription("El servidor se encuentra Offline")
@@ -128,11 +132,11 @@ client.on("messageCreate", async (message) => {
 
       message.channel.send({ embeds: [embed] });
     } else {
-      let players = res.samplePlayers.map((item) => {
+      let players = res.samplePlayers === null ? null : res.samplePlayers.map((item) => {
         return `Nick: **${item.name}**`;
       });
 
-      players = players.toString().replace(/,/g, "\n");
+      players = players === null ? 'No hay jugadores activos' : players.toString().replace(/,/g, "\n");
 
       const embed = new MessageEmbed()
         .setTitle("Players Online")
