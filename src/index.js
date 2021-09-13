@@ -14,7 +14,7 @@ const server = async () => {
   try {
     return await util.status("play.xeonmine.me", { port: 25565 });
   } catch (error) {
-    return null
+    return null;
   }
 };
 
@@ -100,7 +100,7 @@ client.on("messageCreate", async (message) => {
         .setFooter("XeonMine Bot")
         .setTimestamp();
 
-      message.channel.send({ embeds: [embed] });
+      message.reply({ embeds: [embed] });
     } else {
       const embed = new MessageEmbed()
         .setColor("00CC19")
@@ -116,7 +116,7 @@ client.on("messageCreate", async (message) => {
         .setFooter("XeonMine Bot")
         .setTimestamp();
 
-      message.channel.send({ embeds: [embed] });
+      message.reply({ embeds: [embed] });
     }
   }
 
@@ -130,13 +130,18 @@ client.on("messageCreate", async (message) => {
         .setFooter("XeonMine Bot")
         .setTimestamp();
 
-      message.channel.send({ embeds: [embed] });
+      message.reply({ embeds: [embed] });
     } else {
-      let players = res.samplePlayers === null ? null : res.samplePlayers.map((item) => {
-        return `Nick: **${item.name}**`;
-      });
-
-      players = players === null ? 'No hay jugadores activos' : players.toString().replace(/,/g, "\n");
+      let players =
+        res.samplePlayers === null
+          ? null
+          : res.samplePlayers.map((item) => {
+              return `Nick: **${item.name}**`;
+            });
+      players =
+        players === null
+          ? "No hay jugadores activos"
+          : players.toString().replace(/,/g, "\n");
 
       const embed = new MessageEmbed()
         .setTitle("Players Online")
@@ -145,7 +150,7 @@ client.on("messageCreate", async (message) => {
         .setFooter("XeonMine Bot")
         .setTimestamp();
 
-      message.channel.send({ embeds: [embed] });
+      message.reply({ embeds: [embed] });
     }
   }
   if (command == "ping") {
