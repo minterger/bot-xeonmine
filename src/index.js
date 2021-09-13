@@ -138,6 +138,7 @@ client.on("messageCreate", async (message) => {
           : res.samplePlayers.map((item) => {
               return `Nick: **${item.name}**`;
             });
+
       players =
         players === null
           ? "No hay jugadores activos"
@@ -184,7 +185,6 @@ client.once("ready", () => {
     },
   ];
 
-  let i = 0;
   const precence = () => {
     client.user.setPresence({
       activities: [estados[i]],
@@ -192,9 +192,24 @@ client.once("ready", () => {
     });
   };
 
+  const randomNum = () => {
+    return parseInt(Math.random() * (estados.length - 0) + 0);
+  };
+
+  let i = 0;
+
   setInterval(() => {
     precence();
-    i = i === 2 ? 0 : i + 1;
+    let num = i;
+    let boolean = true;
+    while (boolean) {
+      if (i === num) {
+        num = randomNum();
+      } else {
+        i = num;
+        boolean = false;
+      }
+    }
   }, 10000);
 
   console.log("Ready!");
