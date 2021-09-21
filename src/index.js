@@ -113,7 +113,7 @@ client.on("messageCreate", async (message) => {
         .setFooter(`XeonMine • ${message.author.username}`)
         .setTimestamp();
 
-      message.reply({ embeds: [embed] });
+      message.channel.send({ embeds: [embed] });
     } else {
       const embed = new MessageEmbed()
         .setColor("00CC19")
@@ -129,7 +129,7 @@ client.on("messageCreate", async (message) => {
         .setFooter(`XeonMine • ${message.author.username}`)
         .setTimestamp();
 
-      message.reply({ embeds: [embed] });
+      message.channel.send({ embeds: [embed] });
     }
   }
 
@@ -143,7 +143,7 @@ client.on("messageCreate", async (message) => {
         .setFooter(`XeonMine • ${message.author.username}`)
         .setTimestamp();
 
-      message.reply({ embeds: [embed] });
+      message.channel.send({ embeds: [embed] });
     } else {
       let players =
         res.samplePlayers === null
@@ -164,7 +164,7 @@ client.on("messageCreate", async (message) => {
         .setFooter(`XeonMine • ${message.author.username}`)
         .setTimestamp();
 
-      message.reply({ embeds: [embed] });
+      message.channel.send({ embeds: [embed] });
     }
   }
   if (command == "ping") {
