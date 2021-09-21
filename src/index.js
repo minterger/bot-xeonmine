@@ -185,7 +185,11 @@ client.on("messageCreate", async (message) => {
 client.once("ready", () => {
   const estados = [
     {
-      name: "play.xeonmine.ga",
+      name: "ip: play.xeonmine.ga",
+      type: "PLAYING",
+    },
+    {
+      name: "ip2: xms.minecraft.casa",
       type: "PLAYING",
     },
     {
@@ -194,6 +198,10 @@ client.once("ready", () => {
     },
     {
       name: "Help: z!help",
+      type: "WATCHING",
+    },
+    {
+      name: "Prefix: z! o !",
       type: "WATCHING",
     },
   ];
