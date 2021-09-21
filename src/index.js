@@ -110,7 +110,7 @@ client.on("messageCreate", async (message) => {
         .setTitle("Servidor: **play.xeonmine.me**")
         .setDescription("El servidor se encuentra Offline")
         .setColor("RED")
-        .setFooter("XeonMine Bot")
+        .setFooter(`XeonMine • ${message.author.username}`)
         .setTimestamp();
 
       message.reply({ embeds: [embed] });
@@ -126,7 +126,7 @@ client.on("messageCreate", async (message) => {
             "**\n" +
             "El servidor se encuentra Online"
         )
-        .setFooter("XeonMine Bot")
+        .setFooter(`XeonMine • ${message.author.username}`)
         .setTimestamp();
 
       message.reply({ embeds: [embed] });
@@ -140,7 +140,7 @@ client.on("messageCreate", async (message) => {
         .setTitle("Servidor: **play.xeonmine.me**")
         .setDescription("El servidor se encuentra Offline")
         .setColor("RED")
-        .setFooter("XeonMine Bot")
+        .setFooter(`XeonMine • ${message.author.username}`)
         .setTimestamp();
 
       message.reply({ embeds: [embed] });
@@ -161,7 +161,7 @@ client.on("messageCreate", async (message) => {
         .setTitle("Players Online")
         .setColor("RANDOM")
         .setDescription(players)
-        .setFooter("XeonMine Bot")
+        .setFooter(`XeonMine • ${message.author.username}`)
         .setTimestamp();
 
       message.reply({ embeds: [embed] });
