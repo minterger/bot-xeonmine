@@ -32,10 +32,9 @@ client.on("messageCreate", async (message) => {
   } else if (message.content.startsWith(prefix2)) {
     args = message.content.slice(prefix2.length).trim().split(/ +/g);
   } else {
-    return
+    return;
   }
   const command = args.shift().toLowerCase();
-  
 
   if (command == "help" || command == "commands") {
     const embed = new MessageEmbed()
@@ -71,7 +70,7 @@ client.on("messageCreate", async (message) => {
             "players **- ver el nick de los jugadores conectados al servidor**",
         }
       )
-      .setFooter("XeonMine Bot")
+      .setFooter(`XeonMine • ${message.author.username}`)
       .setTimestamp();
     message.channel.send({ embeds: [embed] });
   }
@@ -97,7 +96,7 @@ client.on("messageCreate", async (message) => {
           value: "1.9 - 1.17.1",
         }
       )
-      .setFooter("XeonMine Bot")
+      .setFooter(`XeonMine • ${message.author.username}`)
       .setTimestamp();
 
     message.channel.send({ embeds: [embed] });
