@@ -19,14 +19,23 @@ const server = async () => {
 };
 
 client.on("messageCreate", async (message) => {
-  const prefix = "z!";
+  const prefix1 = "z!";
+  const prefix2 = "!";
 
   if (message.channel.type === "DM") return;
   if (message.author.bot) return;
-  if (!message.content.startsWith(prefix)) return;
+  // if (!message.content.startsWith(prefix)) return;
 
-  const args = message.content.slice(prefix.length).trim().split(/ +/g);
+  let args;
+  if (message.content.startsWith(prefix1)) {
+    args = message.content.slice(prefix1.length).trim().split(/ +/g);
+  } else if (message.content.startsWith(prefix2)) {
+    args = message.content.slice(prefix2.length).trim().split(/ +/g);
+  } else {
+    return
+  }
   const command = args.shift().toLowerCase();
+  
 
   if (command == "help" || command == "commands") {
     const embed = new MessageEmbed()
@@ -40,22 +49,26 @@ client.on("messageCreate", async (message) => {
       // )
       .addFields(
         {
+          name: "Prefixs",
+          value: "**z!** o **!**",
+        },
+        {
           name: "Help",
-          value: "z!help **o** z!commands **- muestra este mensaje**",
+          value: "help **o** commands **- muestra este mensaje**",
         },
         {
           name: "Mostrar IP",
-          value: "z!ip **- ver la ip y version del servidor de minecraft**",
+          value: "ip **- ver la ip y version del servidor de minecraft**",
         },
         {
           name: "Server Status",
           value:
-            "z!status **- ver cantidad de usuarios y el estado del servidor**",
+            "status **- ver cantidad de usuarios y el estado del servidor**",
         },
         {
           name: "Players Online",
           value:
-            "z!players **- ver el nick de los jugadores conectados al servidor**",
+            "players **- ver el nick de los jugadores conectados al servidor**",
         }
       )
       .setFooter("XeonMine Bot")
