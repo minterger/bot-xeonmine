@@ -40,12 +40,12 @@ client.on("messageCreate", async (message) => {
   const command = args.shift().toLowerCase();
 
   // comando para ver los comandos
-  if (command == "help" || command == "commands") {
+  if (command == "help" || command == "comandos") {
     const embed = new MessageEmbed()
       .setTitle("COMANDOS")
       .setColor("790ED7")
       // .setDescription(
-      //   "**z!help** o **z!commands** muestra este mensaje\n" +
+      //   "**z!help** o **z!comandos** muestra este mensaje\n" +
       //     "**z!ip** ver la ip y version del servidor de minecraft\n" +
       //     "**z!status** ver cantidad de usuarios y el estado del servidor\n" +
       //     "**z!players** ver el nick de los jugadores conectados al servidor"
@@ -57,7 +57,7 @@ client.on("messageCreate", async (message) => {
         },
         {
           name: "Help",
-          value: "help **o** commands **- muestra este mensaje**",
+          value: "help **o** comandos **- muestra este mensaje**",
         },
         {
           name: "Mostrar IP",
@@ -176,12 +176,13 @@ client.on("messageCreate", async (message) => {
 
   // Bot habla con vos
   if (command == "say") {
+    const msg = message.content.replace(/^(\w?\D)?say\s/gi, "");
     const permiso = message.member.permissions.has(
       Permissions.FLAGS.ADMINISTRATOR
     );
+
     if (permiso) {
       try {
-        const msg = message.content.replace(/^(\w?\D)?say\s/gi, "");
         await message.delete();
         message.channel.send(msg);
       } catch (error) {
@@ -189,6 +190,35 @@ client.on("messageCreate", async (message) => {
       }
     }
     return;
+  }
+
+  // comando para hacer anuncios
+  if (command == "anuncio") {
+    const anuncio = message.content.replace(/^(\w?\D)?anuncio\s/gi, "");
+
+    const permiso = message.member.permissions.has(
+      Permissions.FLAGS.ADMINISTRATOR
+    );
+
+    const embed = new MessageEmbed()
+      .setTitle("Anuncio")
+      .setColor("5b2c6f")
+      .setDescription(anuncio)
+      .setFields({
+        name: "Etiquetas",
+        value: "@here @everyone",
+      });
+
+    if (permiso) {
+      try {
+        await message.delete();
+        message.channel.send({ embeds: [embed] });
+      } catch (error) {
+        message.channel.send("Necesito permisos de moderador para hacer esto");
+      }
+    } else {
+      return;
+    }
   }
 
   // comando para hacer encuestas
@@ -233,6 +263,7 @@ client.on("messageCreate", async (message) => {
     message.channel.send({ embeds: [embed] });
   }
 });
+
 // When the client is ready, run this code (only once)
 client.once("ready", () => {
   const estados = [
