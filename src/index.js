@@ -205,8 +205,8 @@ client.on("messageCreate", async (message) => {
       .setColor("5b2c6f")
       .setDescription(anuncio)
       .setFields({
-        name: "Etiquetas",
-        value: "@here @everyone",
+        name: "Tags:",
+        value: "||@here @everyone||",
       });
 
     if (permiso) {
