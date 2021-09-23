@@ -26,16 +26,20 @@ client.on("messageCreate", async (message) => {
   if (message.author.bot) return;
   // if (!message.content.startsWith(prefix)) return;
 
+  // filtrar prefix
   let args;
   if (message.content.startsWith(prefix1)) {
+    //prefix1 z!
     args = message.content.slice(prefix1.length).trim().split(/ +/g);
   } else if (message.content.startsWith(prefix2)) {
+    //prefix2 !
     args = message.content.slice(prefix2.length).trim().split(/ +/g);
   } else {
     return;
   }
   const command = args.shift().toLowerCase();
 
+  // comando para ver los comandos
   if (command == "help" || command == "commands") {
     const embed = new MessageEmbed()
       .setTitle("COMANDOS")
@@ -75,6 +79,7 @@ client.on("messageCreate", async (message) => {
     message.channel.send({ embeds: [embed] });
   }
 
+  //ip del servidor
   if (command == "ip") {
     const embed = new MessageEmbed()
       .setTitle("XeonMine Server")
@@ -102,6 +107,7 @@ client.on("messageCreate", async (message) => {
     message.channel.send({ embeds: [embed] });
   }
 
+  // estado del servidor
   if (command == "status") {
     const res = await server();
     if (res === null) {
@@ -132,6 +138,7 @@ client.on("messageCreate", async (message) => {
     }
   }
 
+  // jugadores conectados al servidor
   if (command == "players") {
     const res = await server();
     if (res === null) {
@@ -166,18 +173,46 @@ client.on("messageCreate", async (message) => {
       message.channel.send({ embeds: [embed] });
     }
   }
+
+  if (command == "say") {
+
+    const encuesta = message.content.replace(/^(\w?\D)?say\s/gi, "") + '\n';
+
+    const embed = new MessageEmbed()
+      .setTitle("Encuesta")
+      .setColor("RANDOM")
+      .setDescription(encuesta)
+      .setFields(
+        {
+          name: "Opcion 1:",
+          value: "👍 Si",
+          inline: true 
+        },
+        {
+          name: "Opcion 2:",
+          value: "👎 No",
+          inline: true 
+        }
+      )
+      .setFooter(`XeonMine`);
+
+    const msg = await message.channel.send({ embeds: [embed] });
+    msg.react("👍");
+    msg.react("👎");
+  }
+
+  // comando ping
   if (command == "ping") {
-    message.channel.send("Loading data").then(async (msg) => {
-      msg.delete();
-      const embed = new MessageEmbed()
-        .setTitle("Ping")
-        .setDescription(
-          `🏓Mensaje: **${
-            msg.createdTimestamp - message.createdTimestamp
-          }**ms. API: **${Math.round(client.ws.ping)}**ms`
-        );
-      message.channel.send({ embeds: [embed] });
-    });
+    const msg = await message.channel.send("Loading data");
+    msg.delete();
+    const embed = new MessageEmbed()
+      .setTitle("Ping")
+      .setDescription(
+        `🏓Mensaje: **${
+          msg.createdTimestamp - message.createdTimestamp
+        }**ms. API: **${Math.round(client.ws.ping)}**ms`
+      );
+    message.channel.send({ embeds: [embed] });
   }
 });
 // When the client is ready, run this code (only once)
