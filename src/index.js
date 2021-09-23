@@ -177,13 +177,17 @@ client.on("messageCreate", async (message) => {
   
   // Bot habla con vos
   if (command == "say") {
-    try {
-      const msg = message.content.replace(/^(\w?\D)?say\s/gi, "");
-      await message.delete()
-      message.channel.send(msg);
-    } catch (error) {
-      message.channel.send('Necesito permisos de moderador para hacer esto')
+    const permiso = message.member.hasPermission("ADMINISTRATOR")
+    if (permiso) {
+      try {
+        const msg = message.content.replace(/^(\w?\D)?say\s/gi, "");
+        await message.delete()
+        message.channel.send(msg);
+      } catch (error) {
+        message.channel.send('Necesito permisos de moderador para hacer esto')
+      }
     }
+    return
   }
 
 
