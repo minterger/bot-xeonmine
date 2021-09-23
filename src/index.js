@@ -174,9 +174,19 @@ client.on("messageCreate", async (message) => {
     }
   }
 
+  
+  // Bot habla con vos
   if (command == "say") {
+    const msg = message.content.replace(/^(\w?\D)?say\s/gi, "");
+    message.channel.send(msg);
+    message.delete()
+  }
 
-    const encuesta = message.content.replace(/^(\w?\D)?say\s/gi, "") + '\n';
+
+  // comando para hacer encuestas
+  if (command == "encuesta") {
+    const encuesta =
+      message.content.replace(/^(\w?\D)?encuesta\s/gi, "") + "\n";
 
     const embed = new MessageEmbed()
       .setTitle("Encuesta")
@@ -186,12 +196,12 @@ client.on("messageCreate", async (message) => {
         {
           name: "Opcion 1:",
           value: "👍 Si",
-          inline: true 
+          inline: true,
         },
         {
           name: "Opcion 2:",
           value: "👎 No",
-          inline: true 
+          inline: true,
         }
       )
       .setFooter(`XeonMine`);
