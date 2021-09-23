@@ -1,5 +1,5 @@
 // Require the necessary discord.js classes
-const { Client, Intents, MessageEmbed } = require("discord.js");
+const { Client, Intents, MessageEmbed, Permissions } = require("discord.js");
 const util = require("minecraft-server-util");
 require("dotenv").config();
 
@@ -174,22 +174,22 @@ client.on("messageCreate", async (message) => {
     }
   }
 
-  
   // Bot habla con vos
   if (command == "say") {
-    const permiso = message.member.hasPermission("ADMINISTRATOR")
+    const permiso = message.member.permissions.has(
+      Permissions.FLAGS.ADMINISTRATOR
+    );
     if (permiso) {
       try {
         const msg = message.content.replace(/^(\w?\D)?say\s/gi, "");
-        await message.delete()
+        await message.delete();
         message.channel.send(msg);
       } catch (error) {
-        message.channel.send('Necesito permisos de moderador para hacer esto')
+        message.channel.send("Necesito permisos de moderador para hacer esto");
       }
     }
-    return
+    return;
   }
-
 
   // comando para hacer encuestas
   if (command == "encuesta") {
@@ -285,7 +285,7 @@ client.once("ready", () => {
     }
   }, 10000);
 
-  console.log("Ready!");
+  console.log("Listo para usar!");
 });
 
 // Login to Discord with your client's token
