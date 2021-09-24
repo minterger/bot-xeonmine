@@ -5,10 +5,10 @@
 //   console.log(result);
 // })()
 
-let command = 'say xeonmine say es chido'
+// let command = 'say xeonmine say es chido'
 
-command = command.trim().split('say')
+// command = command.trim().slice()
 
-command = command
+// command = command
 
-console.log( command )
+// console.log( command )

@@ -193,8 +193,10 @@ client.on("messageCreate", async (message) => {
   }
 
   // comando para hacer anuncios
-  if (command == "anuncio") {
-    const anuncio = message.content.replace(/^(\w?\D)?anuncio\s/gi, "");
+  const anuncio = "anuncio";
+  if (command == anuncio) {
+    const regex = new RegExp(`^(\w?\W)?${anuncio}\s`, "gi");
+    const anuncio = message.content.replace(regex, "");
 
     const permiso = message.member.permissions.has(
       Permissions.FLAGS.ADMINISTRATOR
@@ -221,8 +223,41 @@ client.on("messageCreate", async (message) => {
     }
   }
 
+  const anuncioImportant = "importante";
+  if (command == anuncioImportant) {
+    const regex = new RegExp(`^(\w?\W)?${anuncioImportant}\s`, "gi");
+    const anuncio = message.content.replace(regex, "");
+
+    const permiso = message.member.permissions.has(
+      Permissions.FLAGS.ADMINISTRATOR
+    );
+
+    const embed = new MessageEmbed()
+      .setTitle("Anuncio Importante!")
+      .setColor("e74c3c")
+      .setDescription(anuncio)
+      .setFields({
+        name: "Tags:",
+        value: "||@here @everyone||",
+      });
+
+    if (permiso) {
+      try {
+        await message.delete();
+        message.channel.send({ embeds: [embed] });
+      } catch (error) {
+        message.channel.send("Necesito permisos de moderador para hacer esto");
+      }
+    } else {
+      return;
+    }
+  }
+
   // comando para hacer encuestas
-  if (command == "encuesta") {
+  let encuesta = "encuesta";
+  if (command == encuesta) {
+    const regex = new RegExp(`^(\w?\W)?${encuesta}\s`, "gi");
+
     const encuesta =
       message.content.replace(/^(\w?\D)?encuesta\s/gi, "") + "\n";
 
