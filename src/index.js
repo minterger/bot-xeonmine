@@ -195,7 +195,7 @@ client.on("messageCreate", async (message) => {
   // comando para hacer anuncios
   const anuncio = "anuncio";
   if (command == anuncio) {
-    const regex = new RegExp(`^(\w?\W)?${anuncio}\s`, "gi");
+    const regex = new RegExp("^(\w?\W)?"+anuncio+"\s", "gi");
     const anuncio = message.content.replace(regex, "");
 
     const permiso = message.member.permissions.has(
@@ -225,7 +225,7 @@ client.on("messageCreate", async (message) => {
 
   const anuncioImportant = "importante";
   if (command == anuncioImportant) {
-    const regex = new RegExp(`^(\w?\W)?${anuncioImportant}\s`, "gi");
+    const regex = new RegExp("^(\w?\W)?"+anuncioImportant+"\s", "gi");
     const anuncio = message.content.replace(regex, "");
 
     const permiso = message.member.permissions.has(
@@ -256,10 +256,10 @@ client.on("messageCreate", async (message) => {
   // comando para hacer encuestas
   let encuesta = "encuesta";
   if (command == encuesta) {
-    const regex = new RegExp(`^(\w?\W)?${encuesta}\s`, "gi");
+    const regex = new RegExp("^(\w?\W)?"+encuesta+"\s", "gi");
 
     const encuesta =
-      message.content.replace(/^(\w?\D)?encuesta\s/gi, "") + "\n";
+      message.content.replace(regex, "") + "\n";
 
     const embed = new MessageEmbed()
       .setTitle("Encuesta")
