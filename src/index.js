@@ -175,8 +175,10 @@ client.on("messageCreate", async (message) => {
   }
 
   // Bot habla con vos
-  if (command == "say") {
-    const msg = message.content.replace(/^(\w?\D)?say\s/gi, "");
+  const sayCmd = "say"
+  if (command == sayCmd) {
+    const regex = new RegExp(`^(\\w?\\W)?${sayCmd}\\s`, "gi")
+    const msg = message.content.replace(regex, "");
     const permiso = message.member.permissions.has(
       Permissions.FLAGS.ADMINISTRATOR
     );
@@ -193,9 +195,9 @@ client.on("messageCreate", async (message) => {
   }
 
   // comando para hacer anuncios
-  const anuncio = "anuncio";
-  if (command == anuncio) {
-    const regex = new RegExp("^(\w?\W)?"+anuncio+"\s", "gi");
+  const anuncioCmd = "anuncio";
+  if (command == anuncioCmd) {
+    const regex = new RegExp(`^(\\w?\\W)?${anuncioCmd}\\s`, "gi");
     const anuncio = message.content.replace(regex, "");
 
     const permiso = message.member.permissions.has(
@@ -225,7 +227,7 @@ client.on("messageCreate", async (message) => {
 
   const anuncioImportant = "importante";
   if (command == anuncioImportant) {
-    const regex = new RegExp("^(\w?\W)?"+anuncioImportant+"\s", "gi");
+    const regex = new RegExp(`^(\\w?\\W)?${anuncioImportant}\\s`, "gi");
     const anuncio = message.content.replace(regex, "");
 
     const permiso = message.member.permissions.has(
@@ -254,9 +256,9 @@ client.on("messageCreate", async (message) => {
   }
 
   // comando para hacer encuestas
-  let encuesta = "encuesta";
-  if (command == encuesta) {
-    const regex = new RegExp("^(\w?\W)?"+encuesta+"\s", "gi");
+  let encuestaCmd = "encuesta";
+  if (command == encuestaCmd) {
+    const regex = new RegExp(`^(\\w?\\W)?${encuestaCmd}\\s`, "gi");
 
     const encuesta =
       message.content.replace(regex, "") + "\n";
