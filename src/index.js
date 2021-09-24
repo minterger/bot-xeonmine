@@ -257,33 +257,40 @@ client.on("messageCreate", async (message) => {
 
   // comando para hacer encuestas
   let encuestaCmd = "encuesta";
-  if (command == encuestaCmd) {
-    const regex = new RegExp(`^(\\w?\\W)?${encuestaCmd}\\s`, "gi");
-
-    const encuesta =
-      message.content.replace(regex, "") + "\n";
-
-    const embed = new MessageEmbed()
-      .setTitle("Encuesta")
-      .setColor("RANDOM")
-      .setDescription(encuesta)
-      .setFields(
-        {
-          name: "Opcion 1:",
-          value: "👍 Si",
-          inline: true,
-        },
-        {
-          name: "Opcion 2:",
-          value: "👎 No",
-          inline: true,
-        }
-      )
-      .setFooter(`XeonMine`);
-
-    const msg = await message.channel.send({ embeds: [embed] });
-    msg.react("👍");
-    msg.react("👎");
+  const permiso = message.member.permissions.has(
+    Permissions.FLAGS.ADMINISTRATOR
+  );
+  if (permiso) {
+    
+    if (command == encuestaCmd) {
+      const regex = new RegExp(`^(\\w?\\W)?${encuestaCmd}\\s`, "gi");
+  
+      const encuesta =
+        message.content.replace(regex, "") + "\n";
+  
+      const embed = new MessageEmbed()
+        .setTitle("Encuesta")
+        .setColor("RANDOM")
+        .setDescription(encuesta)
+        .setFields(
+          {
+            name: "Opcion 1:",
+            value: "👍 Si",
+            inline: true,
+          },
+          {
+            name: "Opcion 2:",
+            value: "👎 No",
+            inline: true,
+          }
+        )
+        .setFooter(`XeonMine`);
+  
+      const msg = await message.channel.send({ embeds: [embed] });
+      msg.react("👍");
+      msg.react("👎");
+    
+    }
   }
 
   // comando ping
