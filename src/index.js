@@ -1,7 +1,9 @@
-// Require the necessary discord.js classes
 const { Client, Intents, MessageEmbed, Permissions } = require("discord.js");
 const util = require("minecraft-server-util");
+const Server = require("./models/Server");
+
 require("dotenv").config();
+require("./database");
 
 const token = process.env.TOKEN;
 
@@ -44,12 +46,6 @@ client.on("messageCreate", async (message) => {
     const embed = new MessageEmbed()
       .setTitle("COMANDOS")
       .setColor("790ED7")
-      // .setDescription(
-      //   "**z!help** o **z!comandos** muestra este mensaje\n" +
-      //     "**z!ip** ver la ip y version del servidor de minecraft\n" +
-      //     "**z!status** ver cantidad de usuarios y el estado del servidor\n" +
-      //     "**z!players** ver el nick de los jugadores conectados al servidor"
-      // )
       .addFields(
         {
           name: "Prefixs",
@@ -58,6 +54,10 @@ client.on("messageCreate", async (message) => {
         {
           name: "Help",
           value: "help **o** comandos **- muestra este mensaje**",
+        },
+        {
+          name: "Comandos Admin",
+          value: "admincmds **muestra los comandos para administradores**",
         },
         {
           name: "Mostrar IP",
@@ -84,9 +84,6 @@ client.on("messageCreate", async (message) => {
     const embed = new MessageEmbed()
       .setTitle("XeonMine Server")
       .setColor("00CC19")
-      // .setDescription(
-      //   "Ip: **play.xeonmine.me**\n" + "Ip2: **xms.minecraft.casa**\n" + "Version: **1.9 - 1.17.1**"
-      // )
       .setFields(
         {
           name: "IP Primaria:",
@@ -175,9 +172,9 @@ client.on("messageCreate", async (message) => {
   }
 
   // Bot habla con vos
-  const sayCmd = "say"
+  const sayCmd = "say";
   if (command == sayCmd) {
-    const regex = new RegExp(`^(\\w?\\W)?${sayCmd}\\s`, "gi")
+    const regex = new RegExp(`^(\\w?\\W)?${sayCmd}\\s`, "gi");
     const msg = message.content.replace(regex, "");
     const permiso = message.member.permissions.has(
       Permissions.FLAGS.ADMINISTRATOR
@@ -261,13 +258,11 @@ client.on("messageCreate", async (message) => {
     Permissions.FLAGS.ADMINISTRATOR
   );
   if (permiso) {
-    
     if (command == encuestaCmd) {
       const regex = new RegExp(`^(\\w?\\W)?${encuestaCmd}\\s`, "gi");
-  
-      const encuesta =
-        message.content.replace(regex, "") + "\n";
-  
+
+      const encuesta = message.content.replace(regex, "") + "\n";
+
       const embed = new MessageEmbed()
         .setTitle("Encuesta")
         .setColor("RANDOM")
@@ -285,26 +280,32 @@ client.on("messageCreate", async (message) => {
           }
         )
         .setFooter(`XeonMine`);
-  
+
       const msg = await message.channel.send({ embeds: [embed] });
       msg.react("👍");
       msg.react("👎");
-    
     }
   }
 
   // comando ping
   if (command == "ping") {
-    const msg = await message.channel.send("Loading data");
-    msg.delete();
-    const embed = new MessageEmbed()
-      .setTitle("Ping")
-      .setDescription(
-        `🏓Mensaje: **${
-          msg.createdTimestamp - message.createdTimestamp
-        }**ms. API: **${Math.round(client.ws.ping)}**ms`
-      );
-    message.channel.send({ embeds: [embed] });
+    const permiso = message.member.permissions.has(
+      Permissions.FLAGS.ADMINISTRATOR
+    );
+    if (permiso) {
+      const msg = await message.channel.send("Loading data");
+      msg.delete();
+      const embed = new MessageEmbed()
+        .setTitle("Ping")
+        .setDescription(
+          `🏓Mensaje: **${
+            msg.createdTimestamp - message.createdTimestamp
+          }**ms. API: **${Math.round(client.ws.ping)}**ms`
+        );
+      message.channel.send({ embeds: [embed] });
+    } else {
+      return;
+    }
   }
 });
 
