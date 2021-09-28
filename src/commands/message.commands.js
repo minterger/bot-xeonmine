@@ -1,6 +1,6 @@
 const { MessageEmbed, Permissions } = require("discord.js");
 const filtrarPrefix = require("../utils/filtrarPrefix");
-const server = require("../utils/getServer");
+const serverStatus = require("../utils/getServer");
 
 const commands = async (message) => {
   const command = filtrarPrefix(message);
@@ -70,7 +70,7 @@ const commands = async (message) => {
 
   // estado del servidor
   if (command == "status") {
-    const res = await server();
+    const res = await serverStatus();
     if (res === null) {
       const embed = new MessageEmbed()
         .setTitle("Servidor: **play.xeonmine.me**")
@@ -101,7 +101,7 @@ const commands = async (message) => {
 
   // jugadores conectados al servidor
   if (command == "players") {
-    const res = await server();
+    const res = await serverStatus();
     if (res === null) {
       const embed = new MessageEmbed()
         .setTitle("Servidor: **play.xeonmine.me**")
