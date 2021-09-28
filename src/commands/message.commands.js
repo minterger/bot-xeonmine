@@ -45,35 +45,49 @@ const commands = async (message) => {
 
   //ip del servidor
   if (command == "ip") {
+    //datos database
+    const serverName = "XeonMine Server";
+    const serverVersion = "1.9 - 1.17.1";
+    const serverIps = ["play.xeonmine.me", "xms.minecraft.casa"];
+
+    //ordenar ip en fields
+    const fields = serverIps.map((ip, i) => {
+      return {
+        name: `Ip ${i == 0 ? 'Primaria' : 'Repuesto'}`,
+        value: `\`${ip}\``,
+      };
+    });
+
+    //sumar version a los fields
+    fields.push({
+      name: "Version:",
+      value: serverVersion,
+    });
+
     const embed = new MessageEmbed()
-      .setTitle("XeonMine Server")
+      .setTitle(serverName)
       .setColor("00CC19")
-      .setFields(
-        {
-          name: "IP Primaria:",
-          value: "`play.xeonmine.me`",
-        },
-        {
-          name: "IP Secundaria:",
-          value: "`xms.minecraft.casa`",
-        },
-        {
-          name: "Version:",
-          value: "1.9 - 1.17.1",
-        }
-      )
       .setFooter(`XeonMine • ${message.author.username}`)
       .setTimestamp();
+
+    // incrustar ips en embed
+    embed.fields = fields
 
     message.channel.send({ embeds: [embed] });
   }
 
   // estado del servidor
   if (command == "status") {
-    const res = await serverStatus();
+    const serverName = "XeonMine Server";
+    const serverVersion = "1.9 - 1.17.1";
+    const serverIps = ["play.xeonmine.me", "xms.minecraft.casa"];
+
+    //get server statuas
+    const res = await serverStatus(serverIps[0]);
+
     if (res === null) {
       const embed = new MessageEmbed()
-        .setTitle("Servidor: **play.xeonmine.me**")
+        .setTitle(`Servidor: **${serverName}**`)
         .setDescription("El servidor se encuentra Offline")
         .setColor("RED")
         .setFooter(`XeonMine • ${message.author.username}`)
@@ -83,7 +97,7 @@ const commands = async (message) => {
     } else {
       const embed = new MessageEmbed()
         .setColor("00CC19")
-        .setTitle("Servidor: **play.xeonmine.me**")
+        .setTitle(`Servidor: **${serverName}**`)
         .setDescription(
           "Players: **" +
             res.onlinePlayers +
@@ -101,10 +115,14 @@ const commands = async (message) => {
 
   // jugadores conectados al servidor
   if (command == "players") {
-    const res = await serverStatus();
+    const serverName = "XeonMine Server";
+    const serverVersion = "1.9 - 1.17.1";
+    const serverIps = ["play.xeonmine.me", "xms.minecraft.casa"];
+
+    const res = await serverStatus(serverIps[0]);
     if (res === null) {
       const embed = new MessageEmbed()
-        .setTitle("Servidor: **play.xeonmine.me**")
+        .setTitle(`Servidor: **${serverName}**`)
         .setDescription("El servidor se encuentra Offline")
         .setColor("RED")
         .setFooter(`XeonMine • ${message.author.username}`)

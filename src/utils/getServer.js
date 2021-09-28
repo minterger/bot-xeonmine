@@ -1,11 +1,16 @@
 const util = require("minecraft-server-util");
 
-const serverStatus = async () => {
+const serverStatus = async (serverip) => {
   try {
-    return await util.status("play.xeonmine.me", { port: 25565 });
+    const server = serverip.split(':')
+    const ip = server[0]
+    const port = server[1] ? parseInt(server[1]) : 25565; 
+
+    return await util.status(ip, { port });
   } catch (error) {
+    console.log(error);
     return null;
   }
 };
 
-module.exports = server;
+module.exports = serverStatus;
