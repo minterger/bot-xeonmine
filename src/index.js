@@ -1,6 +1,6 @@
 const { Client, Intents } = require("discord.js");
-const commands = require('./commands/message.commands')
-const canal_emojis = ""
+const commandsAdmin = require("./commands/admin.commands");
+const commandsUser = require('./commands/message.commands')
 
 require("dotenv").config();
 require("./database");
@@ -13,7 +13,8 @@ const intents = new Intents(32767);
 const client = new Client({ intents });
 
 client.on("messageCreate", async (message) => {
-  commands(message);
+  commandsUser(message, message.guild.id);
+  commandsAdmin(client, message, message.guild.id)
 });
 
 // When the client is ready, run this code (only once)

@@ -1,8 +1,9 @@
 const { MessageEmbed, Permissions } = require("discord.js");
 const filtrarPrefix = require("../utils/filtrarPrefix");
 const serverStatus = require("../utils/getServer");
+const { getData } = require("../utils/ServerData");
 
-const commands = async (message) => {
+const commandsUser = async (message, id) => {
   const command = filtrarPrefix(message);
 
   // comando para ver los comandos
@@ -46,14 +47,15 @@ const commands = async (message) => {
   //ip del servidor
   if (command == "ip") {
     //datos database
-    const serverName = "XeonMine Server";
-    const serverVersion = "1.9 - 1.17.1";
-    const serverIps = ["play.xeonmine.me", "xms.minecraft.casa"];
+    const data = await getData(id);
+    const serverName = data.serverName;
+    const serverVersion = data.version;
+    const serverIps = data.serverIP;
 
     //ordenar ip en fields
     const fields = serverIps.map((ip, i) => {
       return {
-        name: `Ip ${i == 0 ? 'Primaria' : 'Repuesto'}`,
+        name: `Ip ${i == 0 ? "Primaria" : "Repuesto"}`,
         value: `\`${ip}\``,
       };
     });
@@ -71,16 +73,16 @@ const commands = async (message) => {
       .setTimestamp();
 
     // incrustar ips en embed
-    embed.fields = fields
+    embed.fields = fields;
 
     message.channel.send({ embeds: [embed] });
   }
 
   // estado del servidor
   if (command == "status") {
-    const serverName = "XeonMine Server";
-    const serverVersion = "1.9 - 1.17.1";
-    const serverIps = ["play.xeonmine.me", "xms.minecraft.casa"];
+    const data = await getData(id);
+    const serverName = data.serverName;
+    const serverIps = data.serverIP;
 
     //get server statuas
     const res = await serverStatus(serverIps[0]);
@@ -115,9 +117,9 @@ const commands = async (message) => {
 
   // jugadores conectados al servidor
   if (command == "players") {
-    const serverName = "XeonMine Server";
-    const serverVersion = "1.9 - 1.17.1";
-    const serverIps = ["play.xeonmine.me", "xms.minecraft.casa"];
+    const data = await getData(id);
+    const serverName = data.serverName;
+    const serverIps = data.serverIP;
 
     const res = await serverStatus(serverIps[0]);
     if (res === null) {
@@ -152,143 +154,6 @@ const commands = async (message) => {
       message.channel.send({ embeds: [embed] });
     }
   }
-
-  // Bot habla con vos
-  const sayCmd = "say";
-  if (command == sayCmd) {
-    const regex = new RegExp(`^(\\w?\\W)?${sayCmd}\\s`, "gi");
-    const msg = message.content.replace(regex, "");
-    const permiso = message.member.permissions.has(
-      Permissions.FLAGS.ADMINISTRATOR
-    );
-
-    if (permiso) {
-      try {
-        await message.delete();
-        message.channel.send(msg);
-      } catch (error) {
-        message.channel.send("Necesito permisos de moderador para hacer esto");
-      }
-    }
-    return;
-  }
-
-  // comando para hacer anuncios
-  const anuncioCmd = "anuncio";
-  if (command == anuncioCmd) {
-    const regex = new RegExp(`^(\\w?\\W)?${anuncioCmd}\\s`, "gi");
-    const anuncio = message.content.replace(regex, "");
-
-    const permiso = message.member.permissions.has(
-      Permissions.FLAGS.ADMINISTRATOR
-    );
-
-    const embed = new MessageEmbed()
-      .setTitle("Anuncio")
-      .setColor("5b2c6f")
-      .setDescription(anuncio)
-      .setFields({
-        name: "Tags:",
-        value: "||@here @everyone||",
-      });
-
-    if (permiso) {
-      try {
-        await message.delete();
-        message.channel.send({ embeds: [embed] });
-      } catch (error) {
-        message.channel.send("Necesito permisos de moderador para hacer esto");
-      }
-    } else {
-      return;
-    }
-  }
-
-  const anuncioImportant = "importante";
-  if (command == anuncioImportant) {
-    const regex = new RegExp(`^(\\w?\\W)?${anuncioImportant}\\s`, "gi");
-    const anuncio = message.content.replace(regex, "");
-
-    const permiso = message.member.permissions.has(
-      Permissions.FLAGS.ADMINISTRATOR
-    );
-
-    const embed = new MessageEmbed()
-      .setTitle("Anuncio Importante!")
-      .setColor("e74c3c")
-      .setDescription(anuncio)
-      .setFields({
-        name: "Tags:",
-        value: "||@here @everyone||",
-      });
-
-    if (permiso) {
-      try {
-        await message.delete();
-        message.channel.send({ embeds: [embed] });
-      } catch (error) {
-        message.channel.send("Necesito permisos de moderador para hacer esto");
-      }
-    } else {
-      return;
-    }
-  }
-
-  // comando para hacer encuestas
-  let encuestaCmd = "encuesta";
-  const permiso = message.member.permissions.has(
-    Permissions.FLAGS.ADMINISTRATOR
-  );
-  if (permiso) {
-    if (command == encuestaCmd) {
-      const regex = new RegExp(`^(\\w?\\W)?${encuestaCmd}\\s`, "gi");
-
-      const encuesta = message.content.replace(regex, "") + "\n";
-
-      const embed = new MessageEmbed()
-        .setTitle("Encuesta")
-        .setColor("RANDOM")
-        .setDescription(encuesta)
-        .setFields(
-          {
-            name: "Opcion 1:",
-            value: "👍 Si",
-            inline: true,
-          },
-          {
-            name: "Opcion 2:",
-            value: "👎 No",
-            inline: true,
-          }
-        )
-        .setFooter(`XeonMine`);
-
-      const msg = await message.channel.send({ embeds: [embed] });
-      msg.react("👍");
-      msg.react("👎");
-    }
-  }
-
-  // comando ping
-  if (command == "ping") {
-    const permiso = message.member.permissions.has(
-      Permissions.FLAGS.ADMINISTRATOR
-    );
-    if (permiso) {
-      const msg = await message.channel.send("Loading data");
-      msg.delete();
-      const embed = new MessageEmbed()
-        .setTitle("Ping")
-        .setDescription(
-          `🏓Mensaje: **${
-            msg.createdTimestamp - message.createdTimestamp
-          }**ms. API: **${Math.round(client.ws.ping)}**ms`
-        );
-      message.channel.send({ embeds: [embed] });
-    } else {
-      return;
-    }
-  }
 };
 
-module.exports = commands;
+module.exports = commandsUser;
