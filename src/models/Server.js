@@ -2,8 +2,10 @@ const { Schema, model } = require("mongoose");
 
 const serverSchema = new Schema(
   {
-    serverName: { type: String, required: true },
-    serverIP: [{ type: String, required: true }],
+    discordId: { type: String, required: true },
+    serverName: { type: String, default: null },
+    serverIP: [{ type: String, default: null }],
+    version: { type: String, default: null },
   },
   {
     timestamps: true,
