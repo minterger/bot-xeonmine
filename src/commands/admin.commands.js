@@ -1,5 +1,6 @@
 const { MessageEmbed, Permissions } = require("discord.js");
 const filtrarPrefix = require("../utils/filtrarPrefix");
+const serverStatus = require("../utils/getServer");
 const {
   getData,
   updateName,
@@ -10,6 +11,42 @@ const {
 const commandsAdmin = async (client, message, id) => {
   const command = filtrarPrefix(message);
 
+  if (command == "server") {
+    const permiso = message.member.permissions.has(
+      Permissions.FLAGS.ADMINISTRATOR
+    );
+    if (permiso) {
+      const server = message.content.replace((/^(\w?\W)\w+/gi, ""));
+      const res = await serverStatus(server);
+      if (res === null) {
+        const embed = new MessageEmbed()
+          .setTitle(`Servidor: **${serverName}**`)
+          .setDescription("El servidor se encuentra Offline")
+          .setColor("RED")
+          .setFooter(`XeonMine • ${message.author.username}`)
+          .setTimestamp();
+  
+        message.channel.send({ embeds: [embed] });
+      } else {
+        const embed = new MessageEmbed()
+          .setColor("00CC19")
+          .setTitle(`Servidor: **${serverName}**`)
+          .setDescription(
+            "Players: **" +
+              res.onlinePlayers +
+              "/" +
+              res.maxPlayers +
+              "**\n" +
+              "El servidor se encuentra Online"
+          )
+          .setFooter(`XeonMine • ${message.author.username}`)
+          .setTimestamp();
+  
+        message.channel.send({ embeds: [embed] });
+      }
+    }
+  }
+
   if (command == "setname") {
     const permiso = message.member.permissions.has(
       Permissions.FLAGS.ADMINISTRATOR
@@ -17,14 +54,14 @@ const commandsAdmin = async (client, message, id) => {
     if (permiso) {
       const data = await updateName(id, message.content);
       if (data.server.error) {
-        return message.channel.send('error');
+        return message.channel.send("error");
       }
       const embed = new MessageEmbed()
-      .setTitle(data.message)
-      .setColor("5b2c6f")
-      .setDescription(`**Server Name:** ${data.server.serverName}`)
+        .setTitle(data.message)
+        .setColor("5b2c6f")
+        .setDescription(`**Server Name:** ${data.server.serverName}`);
 
-      message.channel.send({embeds: [embed]});
+      message.channel.send({ embeds: [embed] });
     } else {
       return;
     }
@@ -37,18 +74,18 @@ const commandsAdmin = async (client, message, id) => {
     if (permiso) {
       const data = await updateIp(id, message.content);
       if (data.server.error) {
-        return message.channel.send('error');
+        return message.channel.send("error");
       }
       let ips = "";
       data.server.serverIP.forEach((e) => {
         ips += `\`${e}\` `;
       });
       const embed = new MessageEmbed()
-      .setTitle(data.message)
-      .setColor("5b2c6f")
-      .setDescription(`**IP:** ${ips}`)
+        .setTitle(data.message)
+        .setColor("5b2c6f")
+        .setDescription(`**IP:** ${ips}`);
 
-      message.channel.send({embeds: [embed]});
+      message.channel.send({ embeds: [embed] });
     } else {
       return;
     }
@@ -61,14 +98,14 @@ const commandsAdmin = async (client, message, id) => {
     if (permiso) {
       const data = await updateVersion(id, message.content);
       if (data.server.error) {
-        return message.channel.send('error');
+        return message.channel.send("error");
       }
       const embed = new MessageEmbed()
-      .setTitle(data.message)
-      .setColor("5b2c6f")
-      .setDescription(`**Version:** ${data.server.version}`)
+        .setTitle(data.message)
+        .setColor("5b2c6f")
+        .setDescription(`**Version:** ${data.server.version}`);
 
-      message.channel.send({embeds: [embed]});
+      message.channel.send({ embeds: [embed] });
     } else {
       return;
     }
