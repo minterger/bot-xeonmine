@@ -16,11 +16,12 @@ const commandsAdmin = async (client, message, id) => {
       Permissions.FLAGS.ADMINISTRATOR
     );
     if (permiso) {
-      const server = message.content.replace((/^(\w?\W)\w+/gi, ""));
+      const server = message.content.replace(/^(\w?\W)\w+/gi, "").trim();
       const res = await serverStatus(server);
       if (res === null) {
         const embed = new MessageEmbed()
-          .setTitle(`Servidor: **${serverName}**`)
+          .setTitle(`Servidor: **'Error'**`)
+          .setThumbnail('https://weakwifisolutions.com/wp-content/uploads/2019/08/error-red-cross-7.png?ezimgfmt=ng%3Awebp%2Fngcb2%2Frs%3Adevice%2Frscb2-2')
           .setDescription("El servidor se encuentra Offline")
           .setColor("RED")
           .setFooter(`XeonMine • ${message.author.username}`)
@@ -30,14 +31,14 @@ const commandsAdmin = async (client, message, id) => {
       } else {
         const embed = new MessageEmbed()
           .setColor("00CC19")
-          .setTitle(`Servidor: **${serverName}**`)
+          .setTitle(`Servidor: **${res.host}**`)
           .setDescription(
             "Players: **" +
               res.onlinePlayers +
               "/" +
               res.maxPlayers +
               "**\n" +
-              "El servidor se encuentra Online"
+              "El servidor se encuentra Online" 
           )
           .setFooter(`XeonMine • ${message.author.username}`)
           .setTimestamp();

@@ -3,7 +3,7 @@ const filtrarPrefix = require("../utils/filtrarPrefix");
 const serverStatus = require("../utils/getServer");
 const { getData } = require("../utils/ServerData");
 
-const commandsUser = async (message, id) => {
+const commandsUser = async (client, message, id) => {
   const command = filtrarPrefix(message);
 
   // comando para ver los comandos

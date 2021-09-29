@@ -13,7 +13,7 @@ const intents = new Intents(32767);
 const client = new Client({ intents });
 
 client.on("messageCreate", async (message) => {
-  commandsUser(message, message.guild.id);
+  commandsUser(client, message, message.guild.id);
   commandsAdmin(client, message, message.guild.id)
 });
 
