@@ -29,9 +29,10 @@ const commandsAdmin = async (client, message, id) => {
   
         message.channel.send({ embeds: [embed] });
       } else {
+        const serverPort = res.port == 25565 ? '' : `:${res.port}`
         const embed = new MessageEmbed()
           .setColor("00CC19")
-          .setTitle(`Servidor: **${res.host}**`)
+          .setTitle(`Servidor: **${res.host}${serverPort}**`)
           .setDescription(
             "Players: **" +
               res.onlinePlayers +
