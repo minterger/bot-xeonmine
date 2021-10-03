@@ -90,6 +90,7 @@ const commandsUser = async (client, message, id) => {
     if (res === null) {
       const embed = new MessageEmbed()
         .setTitle(`Servidor: **${serverName}**`)
+        .setThumbnail('https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Cross_red_circle.svg/1024px-Cross_red_circle.svg.png')
         .setDescription("El servidor se encuentra Offline")
         .setColor("RED")
         .setFooter(`XeonMine • ${message.author.username}`)
@@ -99,6 +100,7 @@ const commandsUser = async (client, message, id) => {
     } else {
       const embed = new MessageEmbed()
         .setColor("00CC19")
+        .setThumbnail('https://www.freeiconspng.com/uploads/success-icon-10.png')
         .setTitle(`Servidor: **${serverName}**`)
         .setDescription(
           "Players: **" +
@@ -125,6 +127,7 @@ const commandsUser = async (client, message, id) => {
     if (res === null) {
       const embed = new MessageEmbed()
         .setTitle(`Servidor: **${serverName}**`)
+        .setThumbnail('https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Cross_red_circle.svg/1024px-Cross_red_circle.svg.png')
         .setDescription("El servidor se encuentra Offline")
         .setColor("RED")
         .setFooter(`XeonMine • ${message.author.username}`)

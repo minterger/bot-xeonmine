@@ -21,7 +21,7 @@ const commandsAdmin = async (client, message, id) => {
       if (res === null) {
         const embed = new MessageEmbed()
           .setTitle(`Servidor: **'Error'**`)
-          .setThumbnail('https://weakwifisolutions.com/wp-content/uploads/2019/08/error-red-cross-7.png?ezimgfmt=ng%3Awebp%2Fngcb2%2Frs%3Adevice%2Frscb2-2')
+          .setThumbnail('https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Cross_red_circle.svg/1024px-Cross_red_circle.svg.png')
           .setDescription("El servidor se encuentra Offline")
           .setColor("RED")
           .setFooter(`XeonMine • ${message.author.username}`)
@@ -32,6 +32,7 @@ const commandsAdmin = async (client, message, id) => {
         const serverPort = res.port == 25565 ? '' : `:${res.port}`
         const embed = new MessageEmbed()
           .setColor("00CC19")
+          .setThumbnail('https://www.freeiconspng.com/uploads/success-icon-10.png')
           .setTitle(`Servidor: **${res.host}${serverPort}**`)
           .setDescription(
             "Players: **" +
