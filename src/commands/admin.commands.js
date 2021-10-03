@@ -11,6 +11,54 @@ const {
 const commandsAdmin = async (client, message, id) => {
   const command = filtrarPrefix(message);
 
+  if (command == "admincmds") {
+    const embed = new MessageEmbed()
+      .setTitle("COMANDOS ADMIN")
+      .setColor("790ED7")
+      .addFields(
+        {
+          name: "Prefixs",
+          value: "**z!** o **!**",
+        },
+        {
+          name: "Configurar Nombre",
+          value: "setname **- configurar nombre del servidor de minecraft**",
+        },
+        {
+          name: "Configurar IP",
+          value: "setip **o** setips 'ip primaria', 'ip secundaria' **- configurar ip, mas de 1 separar por ','**",
+        },
+        {
+          name: "Configurar Version",
+          value: "setversion **- configurar version del servidor**",
+        },
+        {
+          name: "Server Status Otros Servidores",
+          value:
+            "server 'ip' **- ver cantidad de usuarios y el estado de cualquier servidor**",
+        },
+        {
+          name: "Anuncio",
+          value:
+            "anuncio **- crear un embed para anunciar en el servidor**",
+        },
+        {
+          name: "Anuncio Importante",
+          value:
+            "imporntante **- crear un embed para anunciar con enfasis en el servidor**",
+        },
+        {
+          name: "Encuesta",
+          value:
+            "encuesta **- crear encuesta de si o no**"
+        }
+      )
+      .setFooter(`XeonMine • ${message.author.username}`)
+      .setTimestamp();
+    message.channel.send({ embeds: [embed] });
+  }
+
+
   if (command == "server") {
     const permiso = message.member.permissions.has(
       Permissions.FLAGS.ADMINISTRATOR
