@@ -25,7 +25,7 @@ serverCtrl.getData = async (discordId) => {
 
 const verifyAndSave = async (
   discordId,
-  { serverName = null, serverIP = null, version = null }
+  { serverName = null, serverIP = null, version = null, toggle = null }
 ) => {
   try {
     const data = await serverCtrl.getData(discordId);
@@ -35,6 +35,7 @@ const verifyAndSave = async (
         serverName: serverName ? serverName : data.serverName,
         serverIP: serverIP ? serverIP : data.serverIP,
         version: version ? version : data.version,
+        toggle: toggle === true ? !data.toggle : data.toggle,
       });
     } else {
       server = new Server({
@@ -42,6 +43,7 @@ const verifyAndSave = async (
         serverName: serverName ? serverName : data.serverName,
         serverIP: serverIP ? serverIP : data.serverIP,
         version: version ? version : data.version,
+        toggle: toggle === true ? !data.toggle : data.toggle,
       });
       await server.save();
     }
@@ -52,6 +54,7 @@ const verifyAndSave = async (
         serverName: serverName ? serverName : data.serverName,
         serverIP: serverIP ? serverIP : data.serverIP,
         version: version ? version : data.version,
+        toggle: toggle === true ? !data.toggle : data.toggle,
       },
     };
   } catch (error) {
@@ -70,14 +73,18 @@ serverCtrl.updateIp = (discordId, ip) => {
   return verifyAndSave(discordId, { serverIP });
 };
 
+serverCtrl.updateName = (discordId, serverNamed) => {
+  const serverName = serverNamed.replace(/^(\w?\W)\w+/gi, "").trim();
+  return verifyAndSave(discordId, { serverName });
+};
+
 serverCtrl.updateVersion = (discordId, serverVersion) => {
   const version = serverVersion.replace(/^(\w?\W)\w+/gi, "").trim();
   return verifyAndSave(discordId, { version });
 };
 
-serverCtrl.updateName = (discordId, serverNamed) => {
-  const serverName = serverNamed.replace(/^(\w?\W)\w+/gi, "").trim();
-  return verifyAndSave(discordId, { serverName });
+serverCtrl.toggleRequest = (discordId) => {
+  return verifyAndSave(discordId, { toggle: true });
 };
 
 module.exports = serverCtrl;

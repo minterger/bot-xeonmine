@@ -6,6 +6,7 @@ const {
   updateName,
   updateIp,
   updateVersion,
+  toggleRequest,
 } = require("../utils/ServerData");
 
 const commandsAdmin = async (client, message, id) => {
@@ -26,11 +27,17 @@ const commandsAdmin = async (client, message, id) => {
         },
         {
           name: "Configurar IP",
-          value: "setip **o** setips 'ip primaria', 'ip secundaria' **- configurar ip, mas de 1 separar por ','**",
+          value:
+            "setip **o** setips 'ip primaria', 'ip secundaria' **- configurar ip, mas de 1 separar por ','**",
         },
         {
           name: "Configurar Version",
           value: "setversion **- configurar version del servidor**",
+        },
+        {
+          name: "Alternar Peticiones",
+          value:
+            "toggle **- Desactiva las peticiones para el comando players y status**",
         },
         {
           name: "Server Status Otros Servidores",
@@ -39,8 +46,7 @@ const commandsAdmin = async (client, message, id) => {
         },
         {
           name: "Anuncio",
-          value:
-            "anuncio **- crear un embed para anunciar en el servidor**",
+          value: "anuncio **- crear un embed para anunciar en el servidor**",
         },
         {
           name: "Anuncio Importante",
@@ -49,8 +55,12 @@ const commandsAdmin = async (client, message, id) => {
         },
         {
           name: "Encuesta",
+          value: "encuesta **- crear encuesta de si o no**",
+        },
+        {
+          name: "Ping",
           value:
-            "encuesta **- crear encuesta de si o no**"
+            "ping **- ver la latencia del servidor del bot y la api de discord**",
         }
       )
       .setFooter(`XeonMine • ${message.author.username}`)
@@ -58,6 +68,31 @@ const commandsAdmin = async (client, message, id) => {
     message.channel.send({ embeds: [embed] });
   }
 
+  if (command == "toggle") {
+    const permiso = message.member.permissions.has(
+      Permissions.FLAGS.ADMINISTRATOR
+    );
+    if (permiso) {
+      const data = await toggleRequest(id);
+      if (data.server.error) {
+        return message.channel.send("error");
+      }
+      const embed = new MessageEmbed()
+        .setTitle(data.message)
+        .setColor("5b2c6f")
+        .setDescription(`**Estado de peticiones:** ${data.server.toggle == true ? 'activadas' : 'desactivadas'}`);
+
+      message.channel.send({ embeds: [embed] });
+    } else {
+      return;
+    }
+  }
+
+  if (command == "resetlink") {
+  }
+
+  if (command == "addlink") {
+  }
 
   if (command == "server") {
     const permiso = message.member.permissions.has(
@@ -69,18 +104,22 @@ const commandsAdmin = async (client, message, id) => {
       if (res === null) {
         const embed = new MessageEmbed()
           .setTitle(`Servidor: **'Error'**`)
-          .setThumbnail('https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Cross_red_circle.svg/1024px-Cross_red_circle.svg.png')
+          .setThumbnail(
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Cross_red_circle.svg/1024px-Cross_red_circle.svg.png"
+          )
           .setDescription("El servidor se encuentra Offline")
           .setColor("RED")
           .setFooter(`XeonMine • ${message.author.username}`)
           .setTimestamp();
-  
+
         message.channel.send({ embeds: [embed] });
       } else {
-        const serverPort = res.port == 25565 ? '' : `:${res.port}`
+        const serverPort = res.port == 25565 ? "" : `:${res.port}`;
         const embed = new MessageEmbed()
           .setColor("00CC19")
-          .setThumbnail('https://www.freeiconspng.com/uploads/success-icon-10.png')
+          .setThumbnail(
+            "https://www.freeiconspng.com/uploads/success-icon-10.png"
+          )
           .setTitle(`Servidor: **${res.host}${serverPort}**`)
           .setDescription(
             "Players: **" +
@@ -88,11 +127,11 @@ const commandsAdmin = async (client, message, id) => {
               "/" +
               res.maxPlayers +
               "**\n" +
-              "El servidor se encuentra Online" 
+              "El servidor se encuentra Online"
           )
           .setFooter(`XeonMine • ${message.author.username}`)
           .setTimestamp();
-  
+
         message.channel.send({ embeds: [embed] });
       }
     }

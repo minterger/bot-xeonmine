@@ -81,8 +81,18 @@ const commandsUser = async (client, message, id) => {
   // estado del servidor
   if (command == "status") {
     const data = await getData(id);
+    const requests = data.toggle;
     const serverName = data.serverName;
     const serverIps = data.serverIP;
+
+    if (!requests) {
+      const embed = new MessageEmbed()
+        .setTitle('Peticiones')
+        .setColor("C70039")
+        .setDescription(`**Estado de peticiones:** desactivadas por administrador`);
+      
+        return message.channel.send({embeds: [embed]})
+    }
 
     //get server statuas
     const res = await serverStatus(serverIps[0]);
@@ -120,8 +130,18 @@ const commandsUser = async (client, message, id) => {
   // jugadores conectados al servidor
   if (command == "players") {
     const data = await getData(id);
+    const requests = data.toggle;
     const serverName = data.serverName;
     const serverIps = data.serverIP;
+
+    if (!requests) {
+      const embed = new MessageEmbed()
+        .setTitle('Peticiones')
+        .setColor("C70039")
+        .setDescription(`**Estado de peticiones:** desactivadas por administrador`);
+      
+        return message.channel.send({embeds: [embed]})
+    }
 
     const res = await serverStatus(serverIps[0]);
     if (res === null) {
