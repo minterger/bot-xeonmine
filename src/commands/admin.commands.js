@@ -80,7 +80,11 @@ const commandsAdmin = async (client, message, id) => {
       const embed = new MessageEmbed()
         .setTitle(data.message)
         .setColor("5b2c6f")
-        .setDescription(`**Estado de peticiones:** ${data.server.toggle == true ? 'activadas' : 'desactivadas'}`);
+        .setDescription(
+          `**Estado de peticiones:** ${
+            data.server.toggle == true ? "activadas" : "desactivadas"
+          }`
+        );
 
       message.channel.send({ embeds: [embed] });
     } else {
@@ -134,6 +138,8 @@ const commandsAdmin = async (client, message, id) => {
 
         message.channel.send({ embeds: [embed] });
       }
+    } else {
+      return;
     }
   }
 
@@ -285,11 +291,11 @@ const commandsAdmin = async (client, message, id) => {
 
   // comando para hacer encuestas
   let encuestaCmd = "encuesta";
-  const permiso = message.member.permissions.has(
-    Permissions.FLAGS.ADMINISTRATOR
-  );
-  if (permiso) {
-    if (command == encuestaCmd) {
+  if (command == encuestaCmd) {
+    const permiso = message.member.permissions.has(
+      Permissions.FLAGS.ADMINISTRATOR
+    );
+    if (permiso) {
       const regex = new RegExp(`^(\\w?\\W)?${encuestaCmd}\\s`, "gi");
 
       const encuesta = message.content.replace(regex, "") + "\n";
@@ -315,6 +321,8 @@ const commandsAdmin = async (client, message, id) => {
       const msg = await message.channel.send({ embeds: [embed] });
       msg.react("👍");
       msg.react("👎");
+    } else {
+      return;
     }
   }
 
