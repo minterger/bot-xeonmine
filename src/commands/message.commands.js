@@ -52,6 +52,8 @@ const commandsUser = async (client, message, id) => {
     const serverVersion = data.version;
     const serverIps = data.serverIP;
 
+    const res = await serverStatus(serverIps[0]);
+
     //ordenar ip en fields
     const fields = serverIps.map((ip, i) => {
       return {
@@ -87,11 +89,13 @@ const commandsUser = async (client, message, id) => {
 
     if (!requests) {
       const embed = new MessageEmbed()
-        .setTitle('Peticiones')
+        .setTitle("Peticiones")
         .setColor("C70039")
-        .setDescription(`**Estado de peticiones:** desactivadas por administrador`);
-      
-        return message.channel.send({embeds: [embed]})
+        .setDescription(
+          `**Estado de peticiones:** desactivadas por administrador`
+        );
+
+      return message.channel.send({ embeds: [embed] });
     }
 
     //get server statuas
@@ -100,7 +104,9 @@ const commandsUser = async (client, message, id) => {
     if (res === null) {
       const embed = new MessageEmbed()
         .setTitle(`Servidor: **${serverName}**`)
-        .setThumbnail('https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Cross_red_circle.svg/1024px-Cross_red_circle.svg.png')
+        .setThumbnail(
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Cross_red_circle.svg/1024px-Cross_red_circle.svg.png"
+        )
         .setDescription("El servidor se encuentra Offline")
         .setColor("RED")
         .setFooter(`XeonMine • ${message.author.username}`)
@@ -110,13 +116,15 @@ const commandsUser = async (client, message, id) => {
     } else {
       const embed = new MessageEmbed()
         .setColor("00CC19")
-        .setThumbnail('https://www.freeiconspng.com/uploads/success-icon-10.png')
+        .setThumbnail(
+          "https://www.freeiconspng.com/uploads/success-icon-10.png"
+        )
         .setTitle(`Servidor: **${serverName}**`)
         .setDescription(
           "Players: **" +
-            res.onlinePlayers +
+            res.players.online +
             "/" +
-            res.maxPlayers +
+            res.players.max +
             "**\n" +
             "El servidor se encuentra Online"
         )
@@ -136,18 +144,22 @@ const commandsUser = async (client, message, id) => {
 
     if (!requests) {
       const embed = new MessageEmbed()
-        .setTitle('Peticiones')
+        .setTitle("Peticiones")
         .setColor("C70039")
-        .setDescription(`**Estado de peticiones:** desactivadas por administrador`);
-      
-        return message.channel.send({embeds: [embed]})
+        .setDescription(
+          `**Estado de peticiones:** desactivadas por administrador`
+        );
+
+      return message.channel.send({ embeds: [embed] });
     }
 
     const res = await serverStatus(serverIps[0]);
     if (res === null) {
       const embed = new MessageEmbed()
         .setTitle(`Servidor: **${serverName}**`)
-        .setThumbnail('https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Cross_red_circle.svg/1024px-Cross_red_circle.svg.png')
+        .setThumbnail(
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Cross_red_circle.svg/1024px-Cross_red_circle.svg.png"
+        )
         .setDescription("El servidor se encuentra Offline")
         .setColor("RED")
         .setFooter(`XeonMine • ${message.author.username}`)
@@ -156,10 +168,10 @@ const commandsUser = async (client, message, id) => {
       message.channel.send({ embeds: [embed] });
     } else {
       let players =
-        res.samplePlayers === null
+        res.players.list === null
           ? null
-          : res.samplePlayers.map((item) => {
-              return `Nick: **${item.name}**`;
+          : res.players.list.map((item) => {
+              return `Nick: **${item.name_clean}**`;
             });
 
       players =
