@@ -167,12 +167,11 @@ const commandsUser = async (client, message, id) => {
 
       message.channel.send({ embeds: [embed] });
     } else {
-      let players =
-        res.players.list === null
-          ? null
-          : res.players.list.map((item) => {
-              return `Nick: **${item.name_clean}**`;
-            });
+      let players = res.players.list
+        ? null
+        : res.players.list.map((item) => {
+            return `Nick: **${item.name_clean}**`;
+          });
 
       players =
         players === null
