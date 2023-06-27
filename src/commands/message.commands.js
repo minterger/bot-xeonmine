@@ -167,7 +167,7 @@ const commandsUser = async (client, message, id) => {
 
       message.channel.send({ embeds: [embed] });
     } else {
-      let players = res.players.list
+      let players = !res.players?.list
         ? null
         : res.players.list.map((item) => {
             return `Nick: **${item.name_clean}**`;
