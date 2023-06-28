@@ -101,7 +101,7 @@ const commandsUser = async (client, message, id) => {
     //get server statuas
     const res = await serverStatus(serverIps[0]);
 
-    if (res === null) {
+    if (!res.online) {
       const embed = new MessageEmbed()
         .setTitle(`Servidor: **${serverName}**`)
         .setThumbnail(
@@ -154,7 +154,7 @@ const commandsUser = async (client, message, id) => {
     }
 
     const res = await serverStatus(serverIps[0]);
-    if (res === null) {
+    if (!res.online) {
       const embed = new MessageEmbed()
         .setTitle(`Servidor: **${serverName}**`)
         .setThumbnail(
@@ -167,16 +167,13 @@ const commandsUser = async (client, message, id) => {
 
       message.channel.send({ embeds: [embed] });
     } else {
-      let players = !res.players?.list
-        ? null
-        : res.players.list.map((item) => {
-            return `Nick: **${item.name_clean}**`;
-          });
+      let players = res.players.list.map((item) => {
+        return `Nick: **${item.name_clean}**`;
+      });
 
-      players =
-        players === null
-          ? "No hay jugadores activos"
-          : players.toString().replace(/,/g, "\n");
+      players = !players.length
+        ? "No hay jugadores activos"
+        : players.toString().replace(/,/g, "\n");
 
       const embed = new MessageEmbed()
         .setTitle("Players Online")
