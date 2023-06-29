@@ -63,7 +63,7 @@ const commandsAdmin = async (client, message, id) => {
             "ping **- ver la latencia del servidor del bot y la api de discord**",
         }
       )
-      .setFooter(`XeonMine • ${message.author.username}`)
+      .setFooter(`TrinityMC • ${message.author.username}`)
       .setTimestamp();
     message.channel.send({ embeds: [embed] });
   }
@@ -113,7 +113,7 @@ const commandsAdmin = async (client, message, id) => {
           )
           .setDescription("El servidor se encuentra Offline")
           .setColor("RED")
-          .setFooter(`XeonMine • ${message.author.username}`)
+          .setFooter(`TrinityMC • ${message.author.username}`)
           .setTimestamp();
 
         message.channel.send({ embeds: [embed] });
@@ -133,7 +133,7 @@ const commandsAdmin = async (client, message, id) => {
               "**\n" +
               "El servidor se encuentra Online"
           )
-          .setFooter(`XeonMine • ${message.author.username}`)
+          .setFooter(`TrinityMC • ${message.author.username}`)
           .setTimestamp();
 
         message.channel.send({ embeds: [embed] });
@@ -316,7 +316,7 @@ const commandsAdmin = async (client, message, id) => {
             inline: true,
           }
         )
-        .setFooter(`XeonMine`);
+        .setFooter(`TrinityMC`);
 
       const msg = await message.channel.send({ embeds: [embed] });
       msg.react("👍");

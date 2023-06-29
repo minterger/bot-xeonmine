@@ -39,7 +39,7 @@ const commandsUser = async (client, message, id) => {
             "players **- ver el nick de los jugadores conectados al servidor**",
         }
       )
-      .setFooter(`XeonMine • ${message.author.username}`)
+      .setFooter(`TrinityMC • ${message.author.username}`)
       .setTimestamp();
     message.channel.send({ embeds: [embed] });
   }
@@ -71,7 +71,7 @@ const commandsUser = async (client, message, id) => {
     const embed = new MessageEmbed()
       .setTitle(serverName)
       .setColor("00CC19")
-      .setFooter(`XeonMine • ${message.author.username}`)
+      .setFooter(`TrinityMC • ${message.author.username}`)
       .setTimestamp();
 
     // incrustar ips en embed
@@ -109,7 +109,7 @@ const commandsUser = async (client, message, id) => {
         )
         .setDescription("El servidor se encuentra Offline")
         .setColor("RED")
-        .setFooter(`XeonMine • ${message.author.username}`)
+        .setFooter(`TrinityMC • ${message.author.username}`)
         .setTimestamp();
 
       message.channel.send({ embeds: [embed] });
@@ -128,7 +128,7 @@ const commandsUser = async (client, message, id) => {
             "**\n" +
             "El servidor se encuentra Online"
         )
-        .setFooter(`XeonMine • ${message.author.username}`)
+        .setFooter(`TrinityMC • ${message.author.username}`)
         .setTimestamp();
 
       message.channel.send({ embeds: [embed] });
@@ -162,7 +162,7 @@ const commandsUser = async (client, message, id) => {
         )
         .setDescription("El servidor se encuentra Offline")
         .setColor("RED")
-        .setFooter(`XeonMine • ${message.author.username}`)
+        .setFooter(`TrinityMC • ${message.author.username}`)
         .setTimestamp();
 
       message.channel.send({ embeds: [embed] });
@@ -179,7 +179,7 @@ const commandsUser = async (client, message, id) => {
         .setTitle("Players Online")
         .setColor("RANDOM")
         .setDescription(players)
-        .setFooter(`XeonMine • ${message.author.username}`)
+        .setFooter(`TrinityMC • ${message.author.username}`)
         .setTimestamp();
 
       message.channel.send({ embeds: [embed] });
