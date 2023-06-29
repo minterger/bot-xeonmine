@@ -39,7 +39,7 @@ const commandsUser = async (client, message, id) => {
             "players **- ver el nick de los jugadores conectados al servidor**",
         }
       )
-      .setFooter(`XeonMine • ${message.author.username}`)
+      .setFooter(`TrinityMC • ${message.author.username}`)
       .setTimestamp();
     message.channel.send({ embeds: [embed] });
   }
@@ -57,7 +57,7 @@ const commandsUser = async (client, message, id) => {
     //ordenar ip en fields
     const fields = serverIps.map((ip, i) => {
       return {
-        name: `Ip ${i == 0 ? "Primaria" : "Repuesto"}`,
+        name: `Ip ${i == 0 ? "" : "de Repuesto"}`,
         value: `\`${ip}\``,
       };
     });
@@ -71,7 +71,7 @@ const commandsUser = async (client, message, id) => {
     const embed = new MessageEmbed()
       .setTitle(serverName)
       .setColor("00CC19")
-      .setFooter(`XeonMine • ${message.author.username}`)
+      .setFooter(`TrinityMC • ${message.author.username}`)
       .setTimestamp();
 
     // incrustar ips en embed
@@ -101,7 +101,7 @@ const commandsUser = async (client, message, id) => {
     //get server statuas
     const res = await serverStatus(serverIps[0]);
 
-    if (res === null) {
+    if (!res.online) {
       const embed = new MessageEmbed()
         .setTitle(`Servidor: **${serverName}**`)
         .setThumbnail(
@@ -109,7 +109,7 @@ const commandsUser = async (client, message, id) => {
         )
         .setDescription("El servidor se encuentra Offline")
         .setColor("RED")
-        .setFooter(`XeonMine • ${message.author.username}`)
+        .setFooter(`TrinityMC • ${message.author.username}`)
         .setTimestamp();
 
       message.channel.send({ embeds: [embed] });
@@ -128,7 +128,7 @@ const commandsUser = async (client, message, id) => {
             "**\n" +
             "El servidor se encuentra Online"
         )
-        .setFooter(`XeonMine • ${message.author.username}`)
+        .setFooter(`TrinityMC • ${message.author.username}`)
         .setTimestamp();
 
       message.channel.send({ embeds: [embed] });
@@ -154,7 +154,7 @@ const commandsUser = async (client, message, id) => {
     }
 
     const res = await serverStatus(serverIps[0]);
-    if (res === null) {
+    if (!res.online) {
       const embed = new MessageEmbed()
         .setTitle(`Servidor: **${serverName}**`)
         .setThumbnail(
@@ -162,28 +162,24 @@ const commandsUser = async (client, message, id) => {
         )
         .setDescription("El servidor se encuentra Offline")
         .setColor("RED")
-        .setFooter(`XeonMine • ${message.author.username}`)
+        .setFooter(`TrinityMC • ${message.author.username}`)
         .setTimestamp();
 
       message.channel.send({ embeds: [embed] });
     } else {
-      let players =
-        res.players.list === null
-          ? null
-          : res.players.list.map((item) => {
-              return `Nick: **${item.name_clean}**`;
-            });
+      let players = res.players.list.map((item) => {
+        return `Nick: **${item.name_clean}**`;
+      });
 
-      players =
-        players === null
-          ? "No hay jugadores activos"
-          : players.toString().replace(/,/g, "\n");
+      players = !players.length
+        ? "No hay jugadores activos"
+        : players.toString().replace(/,/g, "\n");
 
       const embed = new MessageEmbed()
         .setTitle("Players Online")
         .setColor("RANDOM")
         .setDescription(players)
-        .setFooter(`XeonMine • ${message.author.username}`)
+        .setFooter(`TrinityMC • ${message.author.username}`)
         .setTimestamp();
 
       message.channel.send({ embeds: [embed] });
